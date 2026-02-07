@@ -131,7 +131,7 @@ Connects patients with potential clinical trials for 8 cancer types using Advanc
 
 ---
 
-### 👗 [Avāraṇa - Your Wardrobe Stylist](https://github.com/NirmanPatel036)
+### 👗 Avāraṇa - Your Wardrobe Stylist (Coming Soon)
 iOS app for AI-powered wardrobe curation and recommendations based on weather and preferences.
 
 **Tech:** `Expo` `Gemini API` `Vector Embeddings` `FastAPI` `OpenWeather API`
@@ -148,15 +148,7 @@ iOS app for AI-powered wardrobe curation and recommendations based on weather an
 ## 📊 GitHub Analytics
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=NirmanPatel036&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=1F6FEB&text_color=C9D1D9" alt="GitHub Stats" />
-</p>
-
-<p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=NirmanPatel036&theme=tokyonight&hide_border=true&background=0D1117&stroke=58A6FF&ring=1F6FEB&fire=FF6B6B&currStreakLabel=C9D1D9" alt="GitHub Streak" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=NirmanPatel036&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9" alt="Top Languages" />
 </p>
 
 ---
