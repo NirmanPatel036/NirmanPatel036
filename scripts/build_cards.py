@@ -335,13 +335,6 @@ def hero():
     # burst on the right edge
     c.add(f'<circle class="ring" cx="840" cy="170" r="71.25" fill="none" stroke="{INK}" stroke-width="1.5" stroke-dasharray="5 4" opacity=".55"/>')
     draw_rays(c, 840, 170, rays(44, 104, 256, 78, 110, 270, 1.3), 5)
-    # annotations
-    c.add(f'<circle cx="588.5" cy="68.5" r="4" fill="none" stroke="{INK}" stroke-width="1.2"/>')
-    c.add(f'<line x1="556" y1="46" x2="585.6" y2="71" stroke="{INK}" stroke-width="1"/>')
-    c.text(528, 41, "dl", "mono", 11, INK)
-    c.add(f'<circle cx="588.5" cy="266.5" r="4" fill="none" stroke="{INK}" stroke-width="1.2"/>')
-    c.add(f'<line x1="552" y1="296" x2="585" y2="269" stroke="{INK}" stroke-width="1"/>')
-    c.text(514, 301, "qml", "mono", 11, INK)
 
     para = wrap("I build agents, RAG systems and quantum classifiers, and ship every one as a live demo.", "sans", 16, 440)
     block = 15 + 16 + 64 + 16 + 4 + 24 * len(para) + 16 + 16
