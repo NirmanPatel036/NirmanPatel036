@@ -385,7 +385,9 @@ def heatmap(model):
 
 def activity(model):
     c = Card(840, 260, "Contributions over the last 12 months, month by month, with streak and busiest day")
-    frame(c, CREAM, 12)
+    TOP = 88  # waves fill the card below the heading
+    c.add(f'<defs><clipPath id="clip"><rect width="840" height="260" rx="12"/></clipPath>{WAVE_GRADS}</defs>')
+    c.add(f'<g clip-path="url(#clip)"><rect width="840" height="260" fill="{CREAM}"/>')
     shape = None
     if model["monthly"] and max(model["monthly"]) > 0:
         mx = max(model["monthly"])
@@ -403,18 +405,39 @@ def activity(model):
         (CORAL, wave_path(840, 260, 246, 30, 70 if not shape else 95, 4.1, 30, shape), .5, 6.5, ' opacity=".9"'),
         ("gf", wave_path(840, 260, 262, 22, 74 if not shape else 70, 5.6, 36, shape), .75, 0, ""),
     ]
+    c.add(f'<g transform="translate(0 {TOP}) scale(1 {(260 - TOP) / 260:.4f})">')
     for fill, d, delay, bob, op in layers:
         f = f"url(#{fill})" if not fill.startswith("#") else fill
-        path = f'<path d="{d}" fill="{f}" stroke="{INK}" stroke-width=".6"{op}/>'
+        path = f'<path d="{d}" fill="{f}" stroke="{INK}" stroke-width=".6" vector-effect="non-scaling-stroke"{op}/>'
         inner = f'<g class="bob" style="animation-duration:{bob}s">{path}</g>' if bob else path
         c.add(f'<g class="layer" style="animation-delay:{delay}s">{inner}</g>')
-    c.runs(32, baseline(26, 31, "serif", 26), [("Activity, ", "serif", INK), ("month by month", "serif-i", INK)], 26)
-    c.text(32, baseline(63, 15, "mono", 11), model["stat2"], "mono", 11, INK2)
+    c.add("</g>")
+
+    # white bar per month
     colw = 800 / 12
+    floor_y, max_h = 234, 140
+    if model["monthly"] and max(model["monthly"]) > 0:
+        mx = max(model["monthly"])
+        heights = [max(14, round(max_h * v / mx)) for v in model["monthly"]]
+    else:
+        heights = [round(28 + 100 * rand(i, 9) * (0.6 + 0.4 * i / 11)) for i in range(12)]
+    for i, h in enumerate(heights):
+        cx = 20 + i * colw + colw / 2
+        c.add(
+            f'<path class="bar" d="M{cx - 12},{floor_y} V{floor_y - h + 4} a4,4 0 0 1 4,-4 H{cx + 8} a4,4 0 0 1 4,4 V{floor_y} Z" '
+            f'fill="#FFFFFF" fill-opacity=".92" stroke="{INK}" stroke-opacity=".35" stroke-width=".6" '
+            f'style="animation-delay:{0.9 + i * .06:.2f}s"/>'
+        )
+        if model["monthly"]:
+            c.text(cx, floor_y - h - 6, str(model["monthly"][i]), "mono", 10, INK, anchor="middle")
     for i, lab in enumerate(model["labels"]):
-        c.text(20 + i * colw, 247, lab, "mono", 10, INK)
-    close(c)
-    return c.render()
+        c.text(20 + i * colw + colw / 2, 248, lab, "mono", 10, INK, anchor="middle",
+               extra=' stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" paint-order="stroke"')
+
+    c.runs(32, baseline(22, 31, "serif", 26), [("Activity, ", "serif", INK), ("month by month", "serif-i", INK)], 26)
+    c.text(32, baseline(59, 15, "mono", 11), model["stat2"], "mono", 11, INK2)
+    c.add("</g>")
+    return c.render(".bar{transform-box:fill-box;transform-origin:50% 100%;animation:up 1.2s cubic-bezier(.2,.7,.2,1) both}@keyframes up{from{transform:scaleY(0)}to{transform:scaleY(1)}}")
 
 
 def stat(name, label, bg, fg, head, body):
